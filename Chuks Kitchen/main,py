@@ -1,0 +1,95 @@
+from flask import Flask, request, jsonify
+from werkzeug.security import generate_password_harsh
+import random
+import datetime
+
+app= Flask(__name__)
+
+#simulate database to store a list of users
+users =[]
+
+@app.route("/api/signup", methods=["POST"])
+def signup():
+    data = request.json
+    email = data.get("email")
+    phone = data.get("phone")
+    password = data.get("password")
+
+    #check for duplicate email/phone
+    for user in users:
+        if user["email"] == email or user["phon"] == phon:
+            return jsonify({"error": "Email or phone already exists"}), 400
+    
+    #Generate OTP
+    otp = random. randint(100000, 9999999)
+
+    new_user = {
+        "id": len(users) + 1,
+        "email": email,
+        "phone": phone,
+        "password": generate_password_hash(password),
+        "verify": False,
+        "otp": otp,
+        "otp_expiry": datetime.datetime.now() + datetime.timedelta(minutes=5)
+    }
+
+    users.append(new_user)
+    return jsonify({
+        "message":"Signup successful. OTP sent",
+        "otp": otp
+    }), 201
+
+    #simulated food database
+    foods = [
+       {"id": 1, "name": "Fried Rice", "price": 2500, "avaliable": True}
+       {"id": 2, "name": "Egusi Soup","price": 3000, "avaliable": True}
+       {"id": 3, "name": "Okro Soup", "price": 2500, "avaliable": False}
+    ]
+@app.route("/api/foods", methods=["GET"])
+def get_foods():
+    avaliable_foods= [food for food in foods if food["avaliable"]]
+    return jsonify(avaliable_foods), 200
+
+#simulated list of orders
+Orders= []
+
+@pp. route("/api/orders", methods= ["POST"])
+def place_order():
+    data= request.json
+    user_id= data.get("user_id")
+    cart_items= data.get("items") # The list of food id and quantity
+
+    if not cart_items:
+        return jsonify({"error": "Cart is empty"}), 400
+    
+    total= 0
+    order_items= []
+
+    for items in cart_items:
+        food= next((f for f in foods if f["id"] == item["food_id"]), None)
+
+        if not food or not food["avaliable"]:
+            return jsonify({"error": f"{food['name']} unavaliable"}), 400
+        
+    subtotal= food["price"] * item["quanity"]
+        total += subtotal
+        
+    order_items.append({
+        "food_id": food["id"],
+        "name": food["name"],
+        "quantity": item["quantity"],
+        "subtotal": subtotal
+    })
+
+    new_order = {
+        "order_id": len(orders) + 1,
+        "user_id": user_id,
+        "items": order_items,
+        "total": total,
+        "status": "Pending"
+    }
+    Orders.append(new_order)
+    return jsonify({
+        "mmessage": "Order placed successfully",
+        "order": new_order
+    }),201
