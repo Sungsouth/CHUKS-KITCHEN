@@ -12,6 +12,19 @@
 •	Api/orders<br>
 •	Api/cart<br>
 
+**SYSTEM OVERVIEW**<br>
+The system is a Food Ordering Backend system that manages:<br>
+•	User Registration & Authentication<br>
+•	OTP Verification<br>
+•	Role-Based Access(User/Admin)<br>
+•	Food Catalog Management<br>
+•	Cart Management<br>
+•	Order Procession<br>
+•	Order Lifecycle Control<br>
+•	Admin Operations<br>
+It follows a Client to API to Database Architecture<br>
+
+
 **FLOWCHART EXPLANATION**<br>
 In here, highlights the various reasons why some decisions were made while designing the flowchart.<br>
 <em>**1.	User Registration Flow**<em>: User enters email and password because unique identity is required which ensures traceability & communication, and lastly password secures authentication. Decision made: allows for either email/phone flexibility<br>
